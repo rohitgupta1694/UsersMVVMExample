@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'realm-android'
+apply plugin: 'me.tatarka.retrolambda'
+
+ext {
+    supportLibVersion = '25.1.0'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.rohit.usersmvvmexample"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:support-annotations:${supportLibVersion}"
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:support-v4:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+
+    compile 'com.google.code.gson:gson:2.7'
+    //Dagger 2 Libraries
+    provided 'com.google.dagger:dagger-compiler:2.7'
+    compile 'com.google.dagger:dagger:2.7'
+    provided 'javax.annotation:jsr250-api:1.0'
+    // Glide's OkHttp Integration
+    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.tuenti.smsradar:library:1.0.4'
+    //ButterKnife
+    compile 'com.jakewharton:butterknife:8.4.0'
+    provided 'com.jakewharton:butterknife-compiler:8.4.0'
+    //Retrofit2
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //Rxjava2
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.8'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
+    //RxBinding
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-design:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
+
+    testCompile 'junit:junit:4.12'
+}
