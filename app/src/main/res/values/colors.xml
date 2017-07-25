@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimary">#2979FF</color>
+    <color name="colorPrimaryDark">#2962FF</color>
+    <color name="colorAccent">#E53935</color>
+
+    <!--Random group image colours-->
+    <color name="color1">#9fa8da</color>
+    <color name="color2">#e6ee9c</color>
+    <color name="color3">#b39ddb</color>
+    <color name="color4">#ffcc80</color>
+    <color name="color5">#ff8a80</color>
+    <color name="color6">#a5d6a7</color>
+    <color name="color7">#aed581</color>
+    <color name="color8">#f48fb1</color>
+    <color name="color9">#ce93d8</color>
+    <color name="color10">#90caf9</color>
+    <!--Random group image colours-->
+
+    <!--Text Colors-->
+    <color name="textColorWhite">#FFFFFF</color>
+    <color name="grayDarkest">#131313</color>
+    <color name="grayDarker">#222222</color>
+    <color name="grayDark">#333333</color>
+    <color name="grayMedium">#555555</color>
+    <color name="grayLight">#999999</color>
+    <color name="grayLighter">#AAAAAA</color>
+    <color name="grayLightest">#CCCCCC</color>
+    <color name="read_more_color">#AAAAAA</color>
+    <color name="link_text_color">#00b091</color>
+    <color name="placeHolder_image">#f1f4f8</color>
+    <color name="text_error_place_holder">#d41a2b</color>
+    <color name="nearby_location_desc_text_color">#b3ffffff</color>
+    <!--Text Colors-->
+
+    <color name="black_overlay">#66000000</color>
+    <color name="transparent_color">#00FFFFFF</color>
+
 </resources>
