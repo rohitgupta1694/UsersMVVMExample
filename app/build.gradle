@@ -4,7 +4,7 @@ apply plugin: 'realm-android'
 apply plugin: 'me.tatarka.retrolambda'
 
 ext {
-    supportLibVersion = '25.1.0'
+    supportLibVersion = '25.3.1'
 }
 
 android {
@@ -42,6 +42,8 @@ dependencies {
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:support-v4:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
+
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
     compile 'com.google.code.gson:gson:2.7'
     //Dagger 2 Libraries

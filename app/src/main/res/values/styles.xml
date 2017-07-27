@@ -5,7 +5,6 @@
     <style name="Users.ParentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:actionBarWidgetTheme">@style/PopUpMenuStyle</item>
     </style>
 
     <!-- Base application theme. -->
@@ -13,14 +12,9 @@
     <style name="AppTheme" parent="Users.ParentTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/newBlueColor</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
-        <!-- Custom Attr-->
-        <item name="fontPath">@string/openSansBold</item>
     </style>
 
 
@@ -36,13 +30,13 @@
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@null</item>
-        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
-        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
-    </style>
+    <!--    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+            <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+            <item name="android:windowActionBarOverlay">true</item>
+            <item name="android:windowBackground">@null</item>
+            <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+            <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+        </style>-->
 
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
@@ -62,11 +56,11 @@
             <item name="android:windowEnterAnimation">@anim/fade_in</item>
             <item name="android:windowExitAnimation">@anim/fade_out</item>
         </style>-->
-
-    <style name="PopUpMenuStyle" parent="@style/android:Theme.Holo.Light">
-        <item name="textColor">@color/grayDark</item>
-        <item name="textSize">13dp</item>
-    </style>
+    <!--
+        <style name="PopUpMenuStyle" parent="@style/android:Theme.Holo.Light">
+            <item name="textColor">@color/grayDark</item>
+            <item name="textSize">13dp</item>
+        </style>-->
 
     <!--<style name="DogetherEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/grayDark</item>
