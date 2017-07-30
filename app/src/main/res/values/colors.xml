@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#2979FF</color>
-    <color name="colorPrimaryDark">#2962FF</color>
-    <color name="colorAccent">#E53935</color>
+    <!--UI colours-->
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--UI colours-->
 
     <!--Random group image colours-->
     <color name="color1">#9fa8da</color>
@@ -19,6 +22,8 @@
     <!--Random group image colours-->
 
     <!--Text Colors-->
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
     <color name="textColorWhite">#FFFFFF</color>
     <color name="grayDarkest">#131313</color>
     <color name="grayDarker">#222222</color>
@@ -36,5 +41,7 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="transparent_color">#00FFFFFF</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
 
 </resources>

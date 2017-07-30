@@ -1,67 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/textColorWhite">
 
-    <data>
-
-        <variable
-            name="vm"
-            type="com.rohit.usersmvvmexample.viewModels.MainActivityViewModel" />
-    </data>
-
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/textColorWhite">
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/PopupOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_main_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:popupTheme="@style/PopupOverlay">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorPrimary">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="Users"
-                    android:textColor="@color/textColorWhite"
-                    android:textSize="24dp" />
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
-
-        <com.flyco.tablayout.CommonTabLayout
-            android:id="@+id/activity_main_tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_below="@id/activity_main_toolbar"
-            android:background="@color/colorPrimary"
-            app:tl_indicator_color="@android:color/white"
-            bind:setOnTabSelectListener="@{vm.onTabSelectListener}"
-            bind:setTabData="@{vm.tabEntities}"
-            bind:pager="@{(activity_main_view_pager)}"
-            fab:tl_indicator_height="2dp"
-            fab:tl_tab_space_equal="true" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/activity_main_view_pager"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/activity_main_tab_layout"
-            bind:setOffScreenPageLimit="@{vm.offScreenPageLimit}"
-            bind:setViewPagerAdapter="@{vm.viewPagerAdapter}" />
+            android:background="@color/colorPrimary">
 
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Users"
+                android:textColor="@color/textColorWhite"
+                android:textSize="24dp" />
 
-</layout>
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/activity_main_tab_layout"
+        style="@style/MyCustomTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@id/activity_main_toolbar"
+        android:background="@android:color/white"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/grayLightest" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_main_tab_layout" />
+
+</RelativeLayout>

@@ -1,56 +1,91 @@
 package com.rohit.usersmvvmexample.activities;
 
-import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.flyco.tablayout.CommonTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
-import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.adapters.ViewPagerAdapter;
-import com.rohit.usersmvvmexample.databinding.ActivityMainBinding;
-import com.rohit.usersmvvmexample.viewModels.MainActivityViewModel;
+import com.rohit.usersmvvmexample.fragments.UserListFragment;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+
+
 public class MainActivity extends AppCompatActivity {
+
+    //region Views - Inflated by ButterKnife
+
+    @BindView(R.id.activity_main_tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.activity_main_view_pager)
+    ViewPager viewPager;
+
+    //endregion
+
+    //region Variables
+
+    private ArrayList<String> mTitles = new ArrayList<>();
+    private ArrayList<Fragment> mFragmentList = new ArrayList<>();
+    private final CompositeDisposable compositeDisposables = new CompositeDisposable();
+
+    //endregion
+
+    //region Override Methods
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        MainActivityViewModel mainActivityViewModel = new MainActivityViewModel(this);
-        activityMainBinding.setVm(mainActivityViewModel);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        initializeViews();
     }
 
-    @BindingAdapter("setTabData")
-    public static void setTabData(CommonTabLayout tabLayout, ArrayList<CustomTabEntity> tabEntities) {
-        tabLayout.setTabData(tabEntities);
+    @Override
+    protected void onDestroy() {
+        compositeDisposables.clear();
+        super.onDestroy();
     }
 
-    @BindingAdapter("setOnTabSelectListener")
-    public static void setObTabSelectListener(CommonTabLayout tabLayout, OnTabSelectListener onTabSelectListener) {
-        tabLayout.setOnTabSelectListener(onTabSelectListener);
+    //endregion
+
+    //region View Handling Methods
+
+    private void initializeTabs() {
+        mFragmentList.add(new UserListFragment());
+        mFragmentList.add(new UserListFragment());
+
+        mTitles.add("Tab 1");
+        mTitles.add("Tab 2");
     }
 
-    @BindingAdapter("setOffScreenPageLimit")
-    public static void setOffscreenPageLimit(ViewPager viewPager, int offScreenPageLimit) {
-        viewPager.setOffscreenPageLimit(offScreenPageLimit);
-    }
+    private void initializeViews() {
+        initializeTabs();
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), mFragmentList, mTitles);
 
-    @BindingAdapter("setViewPagerAdapter")
-    public static void setViewPagerAdapter(ViewPager viewPager, ViewPagerAdapter viewPagerAdapter) {
-        viewPager.setAdapter(viewPagerAdapter);
-    }
-
-    @BindingAdapter("pager")
-    public static void setupWithViewPager(TabLayout tabLayout, ViewPager viewPager) {
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
+
+        Observable<TabLayout.Tab> tabObservable = RxTabLayout.selections(tabLayout)
+                .observeOn(AndroidSchedulers.mainThread())
+                .share()
+                .doOnNext(tab -> viewPager.setCurrentItem(tab.getPosition(), true));
+
+        compositeDisposables.add(tabObservable.subscribe());
     }
+
+    //endregion
+
 
 }
