@@ -6,6 +6,8 @@
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="primary_light">#BBDEFB</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="male_color">#0E81FF</color>
+    <color name="female_color">#DA141F</color>
     <!--UI colours-->
 
     <!--Random group image colours-->

@@ -8,10 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rohit.usersmvvmexample.R;
+import com.rohit.usersmvvmexample.UsersMVVMApplication;
+
+import javax.inject.Inject;
+
+import io.realm.Realm;
 
 public class UserListFragment extends Fragment {
 
     //region Variables
+
+
+    //endregion
+
+    //region Injected Dependencies
+
+    @Inject
+    Realm realm;
 
     //endregion
 
@@ -35,6 +48,7 @@ public class UserListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((UsersMVVMApplication) getContext()).getObjectsComponent().inject(this);
     }
 
     @Override
