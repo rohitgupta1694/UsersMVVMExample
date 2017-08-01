@@ -1,4 +1,3 @@
-
 package com.rohit.usersmvvmexample.models;
 
 import com.google.gson.annotations.SerializedName;

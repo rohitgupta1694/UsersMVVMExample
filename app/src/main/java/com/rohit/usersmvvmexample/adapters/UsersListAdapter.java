@@ -11,10 +11,6 @@ import com.rohit.usersmvvmexample.viewmodel.UserItemVM;
 
 import java.util.List;
 
-/**
- * Created by ashraf on 31/7/17.
- */
-
 public class UsersListAdapter extends RecyclerView.Adapter<UserListItemHolder> {
     private List<UserItemVM> itemVMList;
 

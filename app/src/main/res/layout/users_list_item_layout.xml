@@ -50,12 +50,12 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/users_item_like_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                app:lottie_fileName="love.json"
-                android:background="@color/black_overlay"/>
+                android:layout_centerHorizontal="true"
+                app:lottie_fileName="love.json" />
 
             <TextView
                 android:id="@+id/users_item_likes_number"

@@ -5,10 +5,6 @@ import android.databinding.ObservableField;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.models.User;
 
-/**
- * Created by ashraf on 31/7/17.
- */
-
 public class UserItemVM {
     public ObservableField<String> imageUrl = new ObservableField<>();
     public ObservableField<Integer> genderDrawable = new ObservableField<>();

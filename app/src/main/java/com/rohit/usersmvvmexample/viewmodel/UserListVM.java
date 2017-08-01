@@ -10,10 +10,6 @@ import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by ashraf on 31/7/17.
- */
-
 public class UserListVM {
 
     private static final String TAG = UserListVM.class.getSimpleName();
