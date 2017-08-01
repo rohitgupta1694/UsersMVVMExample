@@ -6,6 +6,8 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.rohit.usersmvvmexample.models.UsersList;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -59,7 +61,7 @@ public class UsersAPI {
 
     public Observable<UsersList> getUsersList() {
         UsersEndPoints api = retrofit.create(UsersEndPoints.class);
-        return api.getUsersList("597741cb110000be0ad898ea");
+        return api.getUsersList("597741cb110000be0ad898ea").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
     }
 
     //endregion

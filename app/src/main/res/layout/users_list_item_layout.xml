@@ -1,84 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="66dp"
-    android:padding="8dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rohit.usersmvvmexample.viewmodel.UserItemVM"/>
+    </data>
 
     <RelativeLayout
-        android:id="@+id/users_item_profile_layout"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_height="50dp">
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:padding="8dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/users_item_profile_image"
-            android:layout_width="50dp"
+        <RelativeLayout
+            android:id="@+id/users_item_profile_layout"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/circle_image_place_holder"
-            android:scaleType="centerCrop" />
+            android:layout_marginLeft="8dp">
 
-        <ImageView
-            android:id="@+id/users_item_gender_type"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignEnd="@id/users_item_profile_image"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/superman_icon" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/users_item_profile_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/circle_image_place_holder"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{vm.imageUrl.get()}"/>
+
+            <ImageView
+                android:id="@+id/users_item_gender_type"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignEnd="@id/users_item_profile_image"
+                android:layout_alignParentBottom="true"
+                tools:src="@drawable/superman_icon"
+                app:drawable="@{vm.genderDrawable.get()}"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/users_item_likes_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/users_item_like_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                app:lottie_fileName="love.json"
+                android:background="@color/black_overlay"/>
+
+            <TextView
+                android:id="@+id/users_item_likes_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                tools:text="3000 likes"
+                android:textColor="@color/grayMedium"
+                android:textSize="12dp"
+                android:text="@{vm.likes.get()}"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/users_item_profile_layout">
+
+            <TextView
+                android:id="@+id/users_item_full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Hammad Jilani"
+                android:textColor="@color/primary_text"
+                android:text="@{vm.fullName.get()}"/>
+
+            <TextView
+                android:id="@+id/users_item_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/users_item_full_name"
+                android:layout_marginTop="4dp"
+                tools:text="hammad@letsdogether.com"
+                android:textColor="@color/grayLight"
+                android:textSize="12dp"
+                android:text="@{vm.email.get()}"
+                />
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/users_item_likes_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="8dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/users_item_like_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/users_item_likes_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="3000 likes"
-            android:textColor="@color/grayMedium"
-            android:textSize="12dp" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/users_item_profile_layout">
-
-        <TextView
-            android:id="@+id/users_item_full_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hammad Jilani"
-            android:textColor="@color/primary_text" />
-
-        <TextView
-            android:id="@+id/users_item_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_below="@id/users_item_full_name"
-            android:textColor="@color/grayLight"
-            android:textSize="12dp"
-            android:text="hammad@letsdogether.com" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</layout>

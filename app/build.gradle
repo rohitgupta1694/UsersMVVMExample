@@ -108,6 +108,12 @@ dependencies {
 
     //endregion
 
+    //region Glide
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //endregion
+
     //region Circle Image View
 
     compile 'de.hdodenhof:circleimageview:2.1.0'
