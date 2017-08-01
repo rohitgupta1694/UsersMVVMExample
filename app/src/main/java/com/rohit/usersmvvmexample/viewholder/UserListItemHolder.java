@@ -1,9 +1,7 @@
 package com.rohit.usersmvvmexample.viewholder;
 
-import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -44,6 +42,7 @@ public class UserListItemHolder extends RecyclerView.ViewHolder {
                 .diskCacheStrategy(DiskCacheStrategy.ALL).priority(Priority.HIGH).
                 into(imageView);
     }
+
     @BindingAdapter("drawable")
     public static void setDrawable(ImageView imageView, int id) {
         Glide.with(imageView.getContext())
