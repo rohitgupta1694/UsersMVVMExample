@@ -20,7 +20,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UserListItemHolder> {
 
     @Override
     public UserListItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new UserListItemHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.users_list_item_layout, parent, false));
+        return new UserListItemHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.users_list_item_layout, parent, false));
     }
 
     @Override
@@ -30,11 +30,17 @@ public class UsersListAdapter extends RecyclerView.Adapter<UserListItemHolder> {
 
     @Override
     public int getItemCount() {
-        return itemVMList == null ? 0 : itemVMList.size() + 1;
+        return itemVMList == null ? 0 : itemVMList.size();
     }
 
     public void setData(List<UserItemVM> userItemVMs) {
         this.itemVMList = userItemVMs;
         notifyDataSetChanged();
     }
+
+    public void appendData(List<UserItemVM> userItemVMs) {
+        this.itemVMList.addAll(userItemVMs);
+        notifyItemRangeInserted(getItemCount(), getItemCount() + userItemVMs.size());
+    }
+
 }

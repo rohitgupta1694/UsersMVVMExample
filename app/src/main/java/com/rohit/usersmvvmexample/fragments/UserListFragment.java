@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +27,14 @@ import javax.inject.Inject;
 import io.realm.Realm;
 
 public class UserListFragment extends Fragment {
+    private static final String TAG = UserListFragment.class.getSimpleName();
 
     //region Variables
 
-    private RecyclerView recyclerView;
-    private List<UserItemVM> vmList = new ArrayList<>();
-    private UsersListAdapter mAdapter;
     private UserListVM vm;
+    private RecyclerView recyclerView;
+    private UsersListAdapter mAdapter;
+    private List<UserItemVM> vmList = new ArrayList<>();
 
     //endregion
 
@@ -61,8 +63,33 @@ public class UserListFragment extends Fragment {
         recyclerView = binding.usersFragmentRecyclerView;
 
         vm = new UserListVM();
+        setupRecyclerView();
         fetchUsers();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((UsersMVVMApplication) getActivity().getApplication()).getObjectsComponent().inject(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    //endregion
+
+    //region View Handling Methods
+
+    private void fetchUsers() {
+        vm.itemVMList.doOnNext(userItemVMs -> {
+            if (mAdapter.getItemCount() > 0)
+                mAdapter.appendData(userItemVMs);
+            else
+                mAdapter.setData(userItemVMs);
+        }).subscribe();
     }
 
     private void setupRecyclerView() {
@@ -70,29 +97,13 @@ public class UserListFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         RxRecyclerView.scrollStateChanges(recyclerView)
-                .filter(integer -> integer == RecyclerView.SCROLL_STATE_IDLE)
+                .filter(integer -> mAdapter.getItemCount() != 0 && integer == RecyclerView.SCROLL_STATE_IDLE)
                 .map(integer -> (mAdapter.getItemCount() - 1 == linearLayoutManager.findLastVisibleItemPosition()))
                 .doOnNext(aBoolean -> {
                     if (aBoolean)
                         vm.loadData();
-                }).doOnError(Throwable::printStackTrace);
+                }).doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage())).subscribe();
         recyclerView.setAdapter(mAdapter);
-    }
-
-    private void fetchUsers() {
-        vm.itemVMList.doOnNext(userItemVMs -> mAdapter.setData(userItemVMs)).subscribe();
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((UsersMVVMApplication) getActivity().getApplication()).getObjectsComponent().inject(this);
-        setupRecyclerView();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     //endregion
