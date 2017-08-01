@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jakewharton.rxbinding2.support.v7.widget.RxRecyclerView;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.UsersMVVMApplication;
 import com.rohit.usersmvvmexample.adapters.UsersListAdapter;
@@ -28,6 +29,10 @@ public class UserListFragment extends Fragment {
 
     //region Variables
 
+    private RecyclerView recyclerView;
+    private List<UserItemVM> vmList = new ArrayList<>();
+    private UsersListAdapter mAdapter;
+    private UserListVM vm;
 
     //endregion
 
@@ -35,10 +40,6 @@ public class UserListFragment extends Fragment {
 
     @Inject
     Realm realm;
-    private RecyclerView recyclerView;
-    private List<UserItemVM> vmList = new ArrayList<>();
-    private UsersListAdapter mAdapter;
-    private UserListVM vm;
 
     //endregion
 
@@ -60,29 +61,33 @@ public class UserListFragment extends Fragment {
         recyclerView = binding.usersFragmentRecyclerView;
 
         vm = new UserListVM();
-
-        setupRecyclerView();
         fetchUsers();
         return binding.getRoot();
     }
 
     private void setupRecyclerView() {
         mAdapter = new UsersListAdapter(vmList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        RxRecyclerView.scrollStateChanges(recyclerView)
+                .filter(integer -> integer == RecyclerView.SCROLL_STATE_IDLE)
+                .map(integer -> (mAdapter.getItemCount() - 1 == linearLayoutManager.findLastVisibleItemPosition()))
+                .doOnNext(aBoolean -> {
+                    if (aBoolean)
+                        vm.loadData();
+                }).doOnError(Throwable::printStackTrace);
         recyclerView.setAdapter(mAdapter);
     }
 
     private void fetchUsers() {
-        vm.itemVMList.doOnNext(userItemVMs -> {
-            mAdapter.setData(userItemVMs);
-        }).subscribe();
+        vm.itemVMList.doOnNext(userItemVMs -> mAdapter.setData(userItemVMs)).subscribe();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((UsersMVVMApplication) getActivity().getApplication()).getObjectsComponent().inject(this);
+        setupRecyclerView();
     }
 
     @Override

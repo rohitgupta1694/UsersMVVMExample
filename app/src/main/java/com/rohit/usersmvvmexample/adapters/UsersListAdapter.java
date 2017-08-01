@@ -34,7 +34,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UserListItemHolder> {
 
     @Override
     public int getItemCount() {
-        return itemVMList == null ? 0 : itemVMList.size();
+        return itemVMList == null ? 0 : itemVMList.size() + 1;
     }
 
     public void setData(List<UserItemVM> userItemVMs) {

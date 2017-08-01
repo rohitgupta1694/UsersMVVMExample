@@ -23,12 +23,11 @@ public class UserListVM {
         loadData();
     }
 
-    private void loadData() {
+    public void loadData() {
         List<UserItemVM> userItemVMs = new ArrayList<>();
         UsersAPI.getInstance().getUsersList()
                 .doOnNext(usersList -> {
-                    for (User user :
-                            usersList.getResponse()) {
+                    for (User user : usersList.getResponse()) {
                         userItemVMs.add(new UserItemVM(user));
                     }
                     itemVMList.onNext(userItemVMs);
