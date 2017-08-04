@@ -4,7 +4,6 @@ import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,11 +19,12 @@ public class UserListItemHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
 
 
-        LottieAnimationView animationView = binding.usersItemLikeButton;
+/*        LottieAnimationView animationView = binding.usersItemLikeButton;
         animationView.setOnClickListener(view -> {
+            animationView.setAnimation("love.json");
             animationView.loop(false);
             animationView.playAnimation();
-        });
+        });*/
     }
 
     public void bind(final UserItemVM vm) {

@@ -16,14 +16,13 @@ import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.UsersMVVMApplication;
 import com.rohit.usersmvvmexample.adapters.UsersListAdapter;
 import com.rohit.usersmvvmexample.databinding.UsersListFragmentBinding;
+import com.rohit.usersmvvmexample.models.UsersList;
 import com.rohit.usersmvvmexample.viewmodel.UserItemVM;
 import com.rohit.usersmvvmexample.viewmodel.UserListVM;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 
 public class UserListFragment extends Fragment {
@@ -34,7 +33,7 @@ public class UserListFragment extends Fragment {
     private UserListVM vm;
     private RecyclerView recyclerView;
     private UsersListAdapter mAdapter;
-    private List<UserItemVM> vmList = new ArrayList<>();
+    private OrderedRealmCollection<UserItemVM> vmList;
 
     //endregion
 
@@ -89,11 +88,17 @@ public class UserListFragment extends Fragment {
                 mAdapter.appendData(userItemVMs);
             else
                 mAdapter.setData(userItemVMs);
-        }).subscribe();
+        });
+        vm.usersVMList.doOnNext(users -> {
+            //storing data to Realm
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(users);
+            realm.commitTransaction();
+        });
     }
 
     private void setupRecyclerView() {
-        mAdapter = new UsersListAdapter(vmList);
+        mAdapter = new UsersListAdapter(realm.where(UsersList.class).findFirst().getmUsersList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         RxRecyclerView.scrollStateChanges(recyclerView)

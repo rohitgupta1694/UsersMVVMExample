@@ -67,6 +67,12 @@ dependencies {
 
     //endregion
 
+    //region Realm Adapters Library
+
+    compile 'io.realm:android-adapters:2.1.0'
+
+    //endregion
+
     //region Glide and It's OkHttp Integration
 
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'

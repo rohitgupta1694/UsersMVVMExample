@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
-            type="com.rohit.usersmvvmexample.viewmodel.UserItemVM"/>
+            type="com.rohit.usersmvvmexample.viewmodel.UserItemVM" />
+
     </data>
 
     <RelativeLayout
@@ -27,7 +29,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/circle_image_place_holder"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{vm.imageUrl.get()}"/>
+                app:imageUrl="@{vm.imageUrl.get()}" />
 
             <ImageView
                 android:id="@+id/users_item_gender_type"
@@ -35,37 +37,46 @@
                 android:layout_height="20dp"
                 android:layout_alignEnd="@id/users_item_profile_image"
                 android:layout_alignParentBottom="true"
-                tools:src="@drawable/superman_icon"
-                app:drawable="@{vm.genderDrawable.get()}"/>
+                app:drawable="@{vm.genderDrawable.get()}"
+                tools:src="@drawable/superman_icon" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/users_item_likes_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/users_item_like_button"
+            <FrameLayout
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                app:lottie_fileName="love.json" />
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:id="@+id/users_item_like_status_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@{vm.liked ? @drawable/like : @drawable/liked}"
+                    tools:src="@drawable/liked" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/users_item_likes_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                tools:text="3000 likes"
+                android:layout_centerHorizontal="true"
+                android:text="@{vm.likes.get()}"
                 android:textColor="@color/grayMedium"
-                android:textSize="12dp"
-                android:text="@{vm.likes.get()}"/>
+                android:textSize="10dp"
+                tools:text="3000 likes" />
 
         </RelativeLayout>
 
@@ -81,9 +92,9 @@
                 android:id="@+id/users_item_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Hammad Jilani"
+                android:text="@{vm.fullName.get()}"
                 android:textColor="@color/primary_text"
-                android:text="@{vm.fullName.get()}"/>
+                tools:text="Hammad Jilani" />
 
             <TextView
                 android:id="@+id/users_item_email"
@@ -91,11 +102,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/users_item_full_name"
                 android:layout_marginTop="4dp"
-                tools:text="hammad@letsdogether.com"
+                android:text="@{vm.email.get()}"
                 android:textColor="@color/grayLight"
                 android:textSize="12dp"
-                android:text="@{vm.email.get()}"
-                />
+                tools:text="hammad@letsdogether.com" />
 
         </RelativeLayout>
 

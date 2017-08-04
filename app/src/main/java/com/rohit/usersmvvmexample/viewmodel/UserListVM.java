@@ -14,6 +14,7 @@ public class UserListVM {
 
     private static final String TAG = UserListVM.class.getSimpleName();
     public PublishSubject<List<UserItemVM>> itemVMList = PublishSubject.create();
+    public PublishSubject<List<User>> usersVMList = PublishSubject.create();
 
     public UserListVM() {
         loadData();
@@ -27,8 +28,10 @@ public class UserListVM {
                         userItemVMs.add(new UserItemVM(user));
                     }
                     itemVMList.onNext(userItemVMs);
+                    usersVMList.onNext(usersList.getResponse());
                 })
                 .doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage()))
                 .subscribe();
     }
+
 }

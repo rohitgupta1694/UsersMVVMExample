@@ -1,21 +1,28 @@
+
 package com.rohit.usersmvvmexample.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class User extends RealmObject {
 
     @SerializedName("email")
     private String mEmail;
-    @SerializedName("first_name")
-    private String mFirstName;
+    @SerializedName("full_name")
+    private String mFullName;
     @SerializedName("gender")
     private String mGender;
+    @PrimaryKey
     @SerializedName("id")
     private Long mId;
-    @SerializedName("likes")
-    private Long mLikes;
+    @SerializedName("liked")
+    private Boolean mLiked;
+    @SerializedName("likes_count")
+    private Long mLikesCount;
     @SerializedName("profile_picture")
-    private String mProfilePicture;
+    private String profilePicture;
 
     public String getEmail() {
         return mEmail;
@@ -25,12 +32,12 @@ public class User {
         mEmail = email;
     }
 
-    public String getFirstName() {
-        return mFirstName;
+    public String getFullName() {
+        return mFullName;
     }
 
-    public void setFirstName(String firstName) {
-        mFirstName = firstName;
+    public void setFullName(String fullName) {
+        mFullName = fullName;
     }
 
     public String getGender() {
@@ -49,20 +56,28 @@ public class User {
         mId = id;
     }
 
-    public Long getLikes() {
-        return mLikes;
+    public Boolean getLiked() {
+        return mLiked;
     }
 
-    public void setLikes(Long likes) {
-        mLikes = likes;
+    public void setLiked(Boolean liked) {
+        mLiked = liked;
+    }
+
+    public Long getLikesCount() {
+        return mLikesCount;
+    }
+
+    public void setLikesCount(Long likesCount) {
+        mLikesCount = likesCount;
     }
 
     public String getProfilePicture() {
-        return mProfilePicture;
+        return profilePicture;
     }
 
     public void setProfilePicture(String profilePicture) {
-        mProfilePicture = profilePicture;
+        this.profilePicture = profilePicture;
     }
 
 }
