@@ -17,7 +17,7 @@ public class UsersAPI {
 
     //region Variables
 
-    public Retrofit retrofit;
+    private Retrofit retrofit;
 
     //endregion
 

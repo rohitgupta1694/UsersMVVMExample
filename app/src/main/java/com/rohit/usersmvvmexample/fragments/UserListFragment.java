@@ -1,5 +1,6 @@
 package com.rohit.usersmvvmexample.fragments;
 
+import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +17,6 @@ import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.UsersMVVMApplication;
 import com.rohit.usersmvvmexample.adapters.UsersListAdapter;
 import com.rohit.usersmvvmexample.databinding.UsersListFragmentBinding;
-import com.rohit.usersmvvmexample.models.UsersList;
 import com.rohit.usersmvvmexample.viewmodel.UserItemVM;
 import com.rohit.usersmvvmexample.viewmodel.UserListVM;
 
@@ -26,14 +26,14 @@ import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 
 public class UserListFragment extends Fragment {
-    private static final String TAG = UserListFragment.class.getSimpleName();
 
     //region Variables
 
     private UserListVM vm;
-    private RecyclerView recyclerView;
-    private UsersListAdapter mAdapter;
+    private LinearLayoutManager linearLayoutManager;
+
     private OrderedRealmCollection<UserItemVM> vmList;
+    private static final String TAG = UserListFragment.class.getSimpleName();
 
     //endregion
 
@@ -59,10 +59,9 @@ public class UserListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         UsersListFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.users_list_fragment, container, false);
-        recyclerView = binding.usersFragmentRecyclerView;
 
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         vm = new UserListVM();
-        setupRecyclerView();
         fetchUsers();
         return binding.getRoot();
     }
@@ -82,33 +81,34 @@ public class UserListFragment extends Fragment {
 
     //region View Handling Methods
 
+    @Bindable("adapter")
+    public void setAdapter(RecyclerView recyclerView, UsersListAdapter usersListAdapter) {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        setScrollListener(recyclerView);
+        recyclerView.setAdapter(usersListAdapter);
+    }
+
+    private void setScrollListener(RecyclerView recyclerView) {
+        RxRecyclerView.scrollStateChanges(recyclerView)
+                .filter(integer -> vm.mAdapter.getItemCount() != 0 &&
+                        integer == RecyclerView.SCROLL_STATE_IDLE)
+                .map(integer -> (vm.mAdapter.getItemCount() - 1 ==
+                        linearLayoutManager.findLastVisibleItemPosition()))
+                .doOnNext(aBoolean -> {
+                    if (aBoolean)
+                        vm.loadData();
+                }).doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage())).subscribe();
+    }
+
     private void fetchUsers() {
-        vm.itemVMList.doOnNext(userItemVMs -> {
-            if (mAdapter.getItemCount() > 0)
-                mAdapter.appendData(userItemVMs);
-            else
-                mAdapter.setData(userItemVMs);
-        });
+
         vm.usersVMList.doOnNext(users -> {
             //storing data to Realm
             realm.beginTransaction();
             realm.copyToRealmOrUpdate(users);
             realm.commitTransaction();
         });
-    }
-
-    private void setupRecyclerView() {
-        mAdapter = new UsersListAdapter(realm.where(UsersList.class).findFirst().getmUsersList());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        RxRecyclerView.scrollStateChanges(recyclerView)
-                .filter(integer -> mAdapter.getItemCount() != 0 && integer == RecyclerView.SCROLL_STATE_IDLE)
-                .map(integer -> (mAdapter.getItemCount() - 1 == linearLayoutManager.findLastVisibleItemPosition()))
-                .doOnNext(aBoolean -> {
-                    if (aBoolean)
-                        vm.loadData();
-                }).doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage())).subscribe();
-        recyclerView.setAdapter(mAdapter);
     }
 
     //endregion
