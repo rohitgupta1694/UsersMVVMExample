@@ -20,7 +20,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-
 public class MainActivity extends AppCompatActivity {
 
     //region Views - Inflated by ButterKnife

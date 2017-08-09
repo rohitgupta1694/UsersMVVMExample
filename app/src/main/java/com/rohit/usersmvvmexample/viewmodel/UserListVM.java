@@ -15,15 +15,10 @@ import com.rohit.usersmvvmexample.usersApi.UsersAPI;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
-import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmResults;
-
 
 public class UserListVM extends BaseViewModel<UsersListView> {
 
@@ -97,7 +92,7 @@ public class UserListVM extends BaseViewModel<UsersListView> {
         realm.executeTransactionAsync(realm -> {
             realm.copyToRealmOrUpdate(users);
             UsersList usersList = realm.where(UsersList.class).findFirst();
-            if(usersList != null) {
+            if (usersList != null) {
                 RealmList<User> usersRealmList = usersList.getmUsersList();
                 Log.d(TAG, usersRealmList.size() + "");
             }

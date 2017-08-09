@@ -8,7 +8,8 @@ import android.support.annotation.NonNull;
 import com.rohit.usersmvvmexample.baseUiComponents.interfaces.MvvmView;
 import com.rohit.usersmvvmexample.baseUiComponents.interfaces.MvvmViewModel;
 
-public abstract class BaseViewModel<V extends MvvmView> extends BaseObservable implements MvvmViewModel<V> {
+public abstract class BaseViewModel<V extends MvvmView> extends BaseObservable
+        implements MvvmViewModel<V> {
 
     //region Variables
 

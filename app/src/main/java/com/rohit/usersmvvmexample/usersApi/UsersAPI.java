@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.rohit.usersmvvmexample.models.User;
-import com.rohit.usersmvvmexample.models.UsersList;
 
 import java.util.List;
 
