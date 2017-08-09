@@ -17,14 +17,6 @@ public class UserListItemHolder extends RecyclerView.ViewHolder {
     public UserListItemHolder(UsersListItemLayoutBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
-
-
-/*        LottieAnimationView animationView = binding.usersItemLikeButton;
-        animationView.setOnClickListener(view -> {
-            animationView.setAnimation("love.json");
-            animationView.loop(false);
-            animationView.playAnimation();
-        });*/
     }
 
     public void bind(final UserItemVM vm) {

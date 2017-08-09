@@ -29,7 +29,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/circle_image_place_holder"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{vm.imageUrl.get()}" />
+                app:imageUrl="@{vm.imageUrl}" />
 
             <ImageView
                 android:id="@+id/users_item_gender_type"
@@ -37,7 +37,7 @@
                 android:layout_height="20dp"
                 android:layout_alignEnd="@id/users_item_profile_image"
                 android:layout_alignParentBottom="true"
-                app:drawable="@{vm.genderDrawable.get()}"
+                app:drawable="@{vm.genderDrawable}"
                 tools:src="@drawable/superman_icon" />
 
         </RelativeLayout>
@@ -73,26 +73,29 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="@{vm.likes.get()}"
+                android:text="@{vm.likes}"
                 android:textColor="@color/grayMedium"
                 android:textSize="10dp"
                 tools:text="3000 likes" />
 
         </RelativeLayout>
 
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/users_item_likes_layout"
             android:layout_toRightOf="@id/users_item_profile_layout">
 
             <TextView
                 android:id="@+id/users_item_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.fullName.get()}"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{vm.fullName}"
                 android:textColor="@color/primary_text"
                 tools:text="Hammad Jilani" />
 
@@ -102,10 +105,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/users_item_full_name"
                 android:layout_marginTop="4dp"
-                android:text="@{vm.email.get()}"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{vm.email}"
                 android:textColor="@color/grayLight"
                 android:textSize="12dp"
-                tools:text="hammad@letsdogether.com" />
+                tools:text="hammad@letsdogether.comsdfsdfsdfsdfsdfsdfsdf" />
 
         </RelativeLayout>
 

@@ -3,7 +3,10 @@ package com.rohit.usersmvvmexample.usersApi;
 import android.util.Log;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.rohit.usersmvvmexample.models.User;
 import com.rohit.usersmvvmexample.models.UsersList;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -59,9 +62,9 @@ public class UsersAPI {
 
     //region Users API
 
-    public Observable<UsersList> getUsersList() {
+    public Observable<List<User>> getUsersList() {
         UsersEndPoints api = retrofit.create(UsersEndPoints.class);
-        return api.getUsersList("5980451a110000ee071cf8e1")
+        return api.getUsersList("598b05ba1100005404515e6a")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

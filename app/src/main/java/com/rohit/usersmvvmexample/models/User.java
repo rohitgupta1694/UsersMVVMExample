@@ -8,15 +8,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class User extends RealmObject {
 
-    @SerializedName("email")
-    private String mEmail;
-    @SerializedName("full_name")
-    private String mFullName;
-    @SerializedName("gender")
-    private String mGender;
     @PrimaryKey
     @SerializedName("id")
     private Long mId;
+    @SerializedName("full_name")
+    private String mFullName;
+    @SerializedName("email")
+    private String mEmail;
+    @SerializedName("gender")
+    private String mGender;
     @SerializedName("liked")
     private Boolean mLiked;
     @SerializedName("likes_count")

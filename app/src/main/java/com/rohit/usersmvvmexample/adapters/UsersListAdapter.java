@@ -24,9 +24,23 @@ public class UsersListAdapter extends RealmRecyclerViewAdapter<User, UserListIte
 
     //region Constructor Methods
 
-    public UsersListAdapter(OrderedRealmCollection<User> itemVMList) {
-        super(itemVMList, true, true);
+    public UsersListAdapter(OrderedRealmCollection<User> usersList) {
+        super(usersList, true, true);
         setHasStableIds(true);
+    }
+
+    //endregion
+
+    //region Setter Methods
+
+    public void setData(List<UserItemVM> userItemVMs) {
+        this.itemVMList = userItemVMs;
+        notifyDataSetChanged();
+    }
+
+    public void appendData(List<UserItemVM> userItemVMs) {
+        this.itemVMList.addAll(userItemVMs);
+        notifyItemRangeInserted(getItemCount(), getItemCount() + userItemVMs.size());
     }
 
     //endregion
@@ -34,14 +48,8 @@ public class UsersListAdapter extends RealmRecyclerViewAdapter<User, UserListIte
     //region Override Methods
 
     @Override
-    public long getItemId(int index) {
-        //noinspection ConstantConditions
-        return getItem(index).getId();
-    }
-
-    @Override
     public int getItemCount() {
-        return itemVMList == null ? 0 : itemVMList.size();
+        return ((itemVMList == null || itemVMList.size() == 0) ? 0 : itemVMList.size());
     }
 
     @Override
@@ -53,20 +61,6 @@ public class UsersListAdapter extends RealmRecyclerViewAdapter<User, UserListIte
     @Override
     public void onBindViewHolder(UserListItemHolder holder, int position) {
         holder.bind(itemVMList.get(holder.getAdapterPosition()));
-    }
-
-    //endregion
-
-    //region Variables
-
-    public void setData(List<UserItemVM> userItemVMs) {
-        this.itemVMList = userItemVMs;
-        notifyDataSetChanged();
-    }
-
-    public void appendData(List<UserItemVM> userItemVMs) {
-        this.itemVMList.addAll(userItemVMs);
-        notifyItemRangeInserted(getItemCount(), getItemCount() + userItemVMs.size());
     }
 
     //endregion

@@ -5,14 +5,9 @@ import android.databinding.ObservableField;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.models.User;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+public class UserItemVM {
 
-public class UserItemVM extends RealmObject {
-
-    @PrimaryKey
     public long id;
-
     public ObservableField<String> imageUrl = new ObservableField<>();
     public ObservableField<Integer> genderDrawable = new ObservableField<>();
     public ObservableField<String> fullName = new ObservableField<>();
