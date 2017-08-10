@@ -63,7 +63,8 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@{vm.liked ? @drawable/like : @drawable/liked}"
-                    tools:src="@drawable/liked" />
+                    tools:src="@drawable/liked"
+                    android:onClick="" />
 
             </FrameLayout>
 
