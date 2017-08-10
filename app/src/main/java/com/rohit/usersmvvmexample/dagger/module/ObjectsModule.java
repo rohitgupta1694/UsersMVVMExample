@@ -2,6 +2,8 @@ package com.rohit.usersmvvmexample.dagger.module;
 
 import android.app.Application;
 
+import com.rohit.usersmvvmexample.models.UsersList;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -22,8 +24,12 @@ public class ObjectsModule {
 
     public ObjectsModule(Application application) {
         Realm.init(application.getApplicationContext());
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        realm = Realm.getInstance(realmConfiguration);
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder()
+                .initialData(realm1 -> realm1.createObject(UsersList.class))
+                .build();
+//        Realm.deleteRealm(realmConfig);
+        Realm.setDefaultConfiguration(realmConfig);
+        realm = Realm.getInstance(realmConfig);
     }
 
     //endregion

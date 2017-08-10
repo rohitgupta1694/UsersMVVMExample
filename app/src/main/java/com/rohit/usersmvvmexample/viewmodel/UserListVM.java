@@ -13,7 +13,10 @@ import com.rohit.usersmvvmexample.models.UsersList;
 import com.rohit.usersmvvmexample.usersApi.UsersAPI;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.PublishSubject;
@@ -94,7 +97,23 @@ public class UserListVM extends BaseViewModel<UsersListView> {
             UsersList usersList = realm.where(UsersList.class).findFirst();
             if (usersList != null) {
                 RealmList<User> usersRealmList = usersList.getmUsersList();
-                Log.d(TAG, usersRealmList.size() + "");
+                usersRealmList.addAll(realm.where(User.class).findAll());
+                if (usersRealmList.size() > 0) {
+
+                    // The default list is being added on all devices, so according to the merge rules the default list might
+                    // be added multiple times. This is just a temporary fix. Proper ordered sets are being tracked here:
+                    // https://github.com/realm/realm-core/issues/1206
+                    Set<User> seen = new HashSet<>();
+                    Iterator<User> it = usersList.getmUsersList().iterator();
+                    while (it.hasNext()) {
+                        User list = it.next();
+                        if (seen.contains(list)) {
+                            it.remove();
+                        }
+                        seen.add(list);
+                    }
+                    Log.d(TAG, usersRealmList.size() + "");
+                }
             }
         });
     }
