@@ -62,9 +62,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    android:src="@{vm.liked ? @drawable/like : @drawable/liked}"
-                    tools:src="@drawable/liked"
-                    android:onClick="" />
+                    app:clicked="onLikeButtonClicked(vm)"
+                    app:likeDrawable="@{vm.likeDrawable}"
+                    tools:src="@drawable/liked" />
 
             </FrameLayout>
 
@@ -77,6 +77,7 @@
                 android:text="@{vm.likes}"
                 android:textColor="@color/grayMedium"
                 android:textSize="10dp"
+                android:visibility="@{vm.likesTextVisibility}"
                 tools:text="3000 likes" />
 
         </RelativeLayout>
@@ -116,4 +117,5 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
 </layout>

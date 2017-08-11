@@ -34,7 +34,7 @@ public abstract class BaseViewModel<V extends MvvmView> extends BaseObservable
     @Override
     @CallSuper
     public void attachView(V view, Bundle savedInstanceState) {
-        this.mvvmView = mvvmView;
+        this.mvvmView = view;
     }
 
     @Override
