@@ -7,7 +7,7 @@ import com.rohit.usersmvvmexample.baseUiComponents.interfaces.MvvmView;
 import com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseViewModel;
 import com.rohit.usersmvvmexample.models.User;
 
-import .BR;
+import com.rohit.usersmvvmexample.BR;
 import io.realm.Realm;
 import io.realm.RealmObjectChangeListener;
 
