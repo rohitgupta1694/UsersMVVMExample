@@ -3,10 +3,13 @@ package com.rohit.usersmvvmexample.viewmodel;
 import android.databinding.Bindable;
 import android.view.View;
 
-import com.rohit.usersmvvmexample.BR;
 import com.rohit.usersmvvmexample.baseUiComponents.interfaces.MvvmView;
 import com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseViewModel;
 import com.rohit.usersmvvmexample.models.User;
+
+import .BR;
+import io.realm.Realm;
+import io.realm.RealmObjectChangeListener;
 
 public abstract class BaseUserViewModel<V extends MvvmView> extends BaseViewModel<V> {
 
@@ -22,13 +25,19 @@ public abstract class BaseUserViewModel<V extends MvvmView> extends BaseViewMode
     public Integer likesTextVisibility;
 
     public User user;
+    public Realm realm;
 
     //endregion
 
     //region Constructor Methods
 
-    public BaseUserViewModel(User user) {
-        this.user = user;
+    public BaseUserViewModel(Long userId, Realm realm) {
+        this.realm = realm;
+        user = realm.where(User.class).equalTo("mId", userId).findFirst();
+    }
+
+    public void setRealmChangeListener(RealmObjectChangeListener<User> userRealmChangeListener) {
+        user.addChangeListener(userRealmChangeListener);
     }
 
     //endregion
@@ -98,8 +107,8 @@ public abstract class BaseUserViewModel<V extends MvvmView> extends BaseViewMode
 
     }
 
-    public void update(User user, boolean isLast) {
-
+    public void update(User user) {
+        realm.executeTransactionAsync(realm -> realm.insertOrUpdate(user));
     }
 
     //endregion

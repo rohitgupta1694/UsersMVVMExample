@@ -62,7 +62,6 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
-                    app:clicked="onLikeButtonClicked(vm)"
                     app:likeDrawable="@{vm.likeDrawable}"
                     tools:src="@drawable/liked" />
 

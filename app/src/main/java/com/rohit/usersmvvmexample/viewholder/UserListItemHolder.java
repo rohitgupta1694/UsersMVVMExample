@@ -2,12 +2,12 @@ package com.rohit.usersmvvmexample.viewholder;
 
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.rohit.usersmvvmexample.databinding.UsersListItemLayoutBinding;
 import com.rohit.usersmvvmexample.viewmodel.UserItemVM;
 
@@ -32,6 +32,12 @@ public class UserListItemHolder extends RecyclerView.ViewHolder {
 
     public void bind(UserItemVM vm) {
         binding.setVm(vm);
+        RxView.clicks(binding.usersItemLikeStatusButton)
+                .doOnNext(view -> {
+                    vm.likeButtonClicked();
+                })
+                .doOnError(throwable -> throwable.getCause().getMessage())
+                .subscribe();
     }
 
     //endregion
@@ -63,15 +69,6 @@ public class UserListItemHolder extends RecyclerView.ViewHolder {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH).
                 into(imageView);
-    }
-
-    //endregion
-
-    //region Click Listeners
-
-    @BindingAdapter("clicked")
-    private void onLikeButtonClicked(View view, UserItemVM userItemVM) {
-        userItemVM.likeButtonClicked();
     }
 
     //endregion

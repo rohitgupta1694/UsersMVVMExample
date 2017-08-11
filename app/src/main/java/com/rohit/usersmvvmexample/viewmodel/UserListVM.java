@@ -78,7 +78,7 @@ public class UserListVM extends BaseViewModel<UsersListView> {
                 .doOnNext(users -> {
                     storingDataToRealm(users);
                     for (User user : users) {
-                        userItemVMs.add(new UserItemVM(user));
+                        userItemVMs.add(new UserItemVM(user.getId(), realm));
                     }
                     itemVMList.onNext(userItemVMs);
                 })
