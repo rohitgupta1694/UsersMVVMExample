@@ -1,33 +1,21 @@
 package com.rohit.usersmvvmexample.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.rohit.usersmvvmexample.R;
-import com.rohit.usersmvvmexample.models.User;
 import com.rohit.usersmvvmexample.viewholder.UserListItemHolder;
 import com.rohit.usersmvvmexample.viewmodel.UserItemVM;
 
 import java.util.List;
 
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmRecyclerViewAdapter;
-
-public class UsersListAdapter extends RealmRecyclerViewAdapter<User, UserListItemHolder> {
+public class UsersListAdapter extends RecyclerView.Adapter<UserListItemHolder> {
 
     //region Variables
 
     private List<UserItemVM> itemVMList;
-
-    //endregion
-
-    //region Constructor Methods
-
-    public UsersListAdapter(OrderedRealmCollection<User> usersList) {
-        super(usersList, true, true);
-        setHasStableIds(true);
-    }
 
     //endregion
 

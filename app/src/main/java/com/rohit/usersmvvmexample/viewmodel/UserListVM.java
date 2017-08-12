@@ -31,7 +31,7 @@ public class UserListVM extends BaseViewModel<UsersListView> {
     public UsersListAdapter mAdapter;
     public LinearLayoutManager linearLayoutManager;
     private static final String TAG = UserListVM.class.getSimpleName();
-    private PublishSubject<List<UserItemVM>> itemVMList = PublishSubject.create();
+    private PublishSubject<List<User>> usersListPublishSubject = PublishSubject.create();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     //endregion
@@ -41,7 +41,7 @@ public class UserListVM extends BaseViewModel<UsersListView> {
     public UserListVM(Context context, Realm realm) {
         this.realm = realm;
         linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        mAdapter = new UsersListAdapter(realm.where(User.class).findAll());
+        mAdapter = new UsersListAdapter();
     }
 
     //endregion
@@ -54,7 +54,11 @@ public class UserListVM extends BaseViewModel<UsersListView> {
         // TODO: 8/8/17 Add Like Change Observable
         /*compositeDisposable.add();*/
 
-        compositeDisposable.add(itemVMList.doOnNext(userItemVMs -> {
+        compositeDisposable.add(usersListPublishSubject.doOnNext(users -> {
+            List<UserItemVM> userItemVMs = new ArrayList<>();
+            for (User user : users) {
+                userItemVMs.add(new UserItemVM(user.getId(), realm));
+            }
             if (mAdapter.getItemCount() > 0)
                 mAdapter.appendData(userItemVMs);
             else
@@ -73,15 +77,8 @@ public class UserListVM extends BaseViewModel<UsersListView> {
     //region API Calls
 
     public void loadData() {
-        List<UserItemVM> userItemVMs = new ArrayList<>();
         compositeDisposable.add(UsersAPI.getInstance().getUsersList()
-                .doOnNext(users -> {
-                    storingDataToRealm(users);
-                    for (User user : users) {
-                        userItemVMs.add(new UserItemVM(user.getId(), realm));
-                    }
-                    itemVMList.onNext(userItemVMs);
-                })
+                .doOnNext(this::storingDataToRealm)
                 .doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage()))
                 .subscribe());
     }
@@ -99,10 +96,6 @@ public class UserListVM extends BaseViewModel<UsersListView> {
                 RealmList<User> usersRealmList = usersList.getmUsersList();
                 usersRealmList.addAll(realm.where(User.class).findAll());
                 if (usersRealmList.size() > 0) {
-
-                    // The default list is being added on all devices, so according to the merge rules the default list might
-                    // be added multiple times. This is just a temporary fix. Proper ordered sets are being tracked here:
-                    // https://github.com/realm/realm-core/issues/1206
                     Set<User> seen = new HashSet<>();
                     Iterator<User> it = usersList.getmUsersList().iterator();
                     while (it.hasNext()) {
@@ -115,6 +108,8 @@ public class UserListVM extends BaseViewModel<UsersListView> {
                     Log.d(TAG, usersRealmList.size() + "");
                 }
             }
+        }, () -> usersListPublishSubject.onNext(users), error -> {
+
         });
     }
 

@@ -65,7 +65,7 @@ public class UserListFragment extends Fragment implements UsersListView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeViews();
-        vm.attachView((UsersListView) this, savedInstanceState);
+        vm.attachView(this, savedInstanceState);
         vm.loadData();
     }
 

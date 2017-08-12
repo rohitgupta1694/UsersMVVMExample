@@ -13,14 +13,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:padding="8dp">
+        android:layout_height="72dp">
 
         <RelativeLayout
             android:id="@+id/users_item_profile_layout"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginLeft="8dp">
+            android:layout_centerVertical="true">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/users_item_profile_image"
@@ -45,7 +44,9 @@
         <RelativeLayout
             android:id="@+id/users_item_likes_layout"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/users_item_profile_layout"
+            android:layout_alignBottom="@id/users_item_profile_layout"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp">

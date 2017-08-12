@@ -16,8 +16,9 @@
             android:id="@+id/users_fragment_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:padding="8dp" />
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 </layout>
