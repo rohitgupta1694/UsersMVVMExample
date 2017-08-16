@@ -1,13 +1,12 @@
-package com.rohit.usersmvvmexample.viewmodel;
+package com.rohit.usersmvvmexample.baseUiComponents.viewModels;
 
 import android.databinding.Bindable;
 import android.view.View;
 
+import com.rohit.usersmvvmexample.BR;
 import com.rohit.usersmvvmexample.baseUiComponents.interfaces.MvvmView;
-import com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseViewModel;
 import com.rohit.usersmvvmexample.models.User;
 
-import com.rohit.usersmvvmexample.BR;
 import io.realm.Realm;
 import io.realm.RealmObjectChangeListener;
 

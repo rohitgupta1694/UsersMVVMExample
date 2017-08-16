@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.baseUiComponents.interfaces.MvvmView;
+import com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseUserViewModel;
 import com.rohit.usersmvvmexample.models.User;
 
 import io.realm.Realm;

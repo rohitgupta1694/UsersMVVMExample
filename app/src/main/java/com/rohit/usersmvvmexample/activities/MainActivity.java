@@ -86,5 +86,4 @@ public class MainActivity extends AppCompatActivity {
 
     //endregion
 
-
 }
