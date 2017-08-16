@@ -5,7 +5,8 @@
 
         <variable
             name="vm"
-            type="com.rohit.usersmvvmexample.viewmodel.UserListVM" />
+            type="com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseViewModel" />
+
     </data>
 
     <RelativeLayout

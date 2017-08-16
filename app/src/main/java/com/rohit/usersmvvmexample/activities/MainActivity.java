@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.adapters.ViewPagerAdapter;
+import com.rohit.usersmvvmexample.fragments.LikedFragment;
 import com.rohit.usersmvvmexample.fragments.UserListFragment;
 
 import java.util.ArrayList;
@@ -63,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
     private void initializeTabs() {
         mFragmentList.add(new UserListFragment());
         mFragmentList.add(new UserListFragment());
+        mFragmentList.add(new LikedFragment());
 
         mTitles.add("Tab 1");
         mTitles.add("Tab 2");
+        mTitles.add("Tab 3");
     }
 
     private void initializeViews() {
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), mFragmentList, mTitles);
 
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
 
         Observable<TabLayout.Tab> tabObservable = RxTabLayout.selections(tabLayout)
