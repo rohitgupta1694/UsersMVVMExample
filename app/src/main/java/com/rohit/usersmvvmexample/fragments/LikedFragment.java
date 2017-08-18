@@ -1,5 +1,6 @@
 package com.rohit.usersmvvmexample.fragments;
 
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.jakewharton.rxbinding2.view.RxView;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.UsersMVVMApplication;
 import com.rohit.usersmvvmexample.databinding.UsersListFragmentBinding;
@@ -17,6 +20,7 @@ import com.rohit.usersmvvmexample.viewmodel.LikeListVM;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.realm.Realm;
 
 public class LikedFragment extends Fragment implements UsersListView {
@@ -25,7 +29,7 @@ public class LikedFragment extends Fragment implements UsersListView {
 
     private LikeListVM vm;
     private RecyclerView recyclerView;
-    private static final String TAG = UserListFragment.class.getSimpleName();
+    private Button likesListButton;
 
     //endregion
 
@@ -56,6 +60,7 @@ public class LikedFragment extends Fragment implements UsersListView {
         vm = new LikeListVM(getContext(), realm);
         binding.setVm(vm);
         recyclerView = binding.usersFragmentRecyclerView;
+        likesListButton = binding.usersFragmentFetchLikedUsersButton;
         return binding.getRoot();
     }
 
@@ -64,7 +69,12 @@ public class LikedFragment extends Fragment implements UsersListView {
         super.onViewCreated(view, savedInstanceState);
         initializeViews();
         vm.attachView(this, savedInstanceState);
-//        vm.loadData();
+        vm.searchForLikedUsers();
+
+        RxView.clicks(likesListButton)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(o -> vm.searchForLikedUsers())
+                .subscribe();
     }
 
     @Override
@@ -80,21 +90,8 @@ public class LikedFragment extends Fragment implements UsersListView {
     private void initializeViews() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(vm.linearLayoutManager);
-//        setScrollListener(recyclerView);
         recyclerView.setAdapter(vm.mAdapter);
     }
-
-/*    private void setScrollListener(RecyclerView recyclerView) {
-        RxRecyclerView.scrollStateChanges(recyclerView)
-                .filter(integer -> vm.mAdapter.getItemCount() != 0 &&
-                        integer == RecyclerView.SCROLL_STATE_IDLE)
-                .map(integer -> (vm.mAdapter.getItemCount() - 1 ==
-                        vm.linearLayoutManager.findLastVisibleItemPosition()))
-                .doOnNext(aBoolean -> {
-                    if (aBoolean)
-                        vm.loadData();
-                }).doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage())).subscribe();
-    }*/
 
     //region Implemented Methods
 
@@ -104,5 +101,10 @@ public class LikedFragment extends Fragment implements UsersListView {
     }
 
     //endregion
+
+    @BindingAdapter("android:visibility")
+    public static void setVisibility(View view, boolean visible) {
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
 
 }

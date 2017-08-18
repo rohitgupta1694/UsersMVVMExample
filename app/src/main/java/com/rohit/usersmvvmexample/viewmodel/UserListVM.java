@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.View;
 
 import com.rohit.usersmvvmexample.adapters.UsersListAdapter;
 import com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseViewModel;
@@ -77,6 +78,7 @@ public class UserListVM extends BaseViewModel<UsersListView> {
     //region API Calls
 
     public void loadData() {
+        setEmptyScreenVisible(View.GONE);
         compositeDisposable.add(UsersAPI.getInstance().getUsersList()
                 .doOnNext(this::storingDataToRealm)
                 .doOnError(throwable -> Log.d(TAG, throwable.getCause().getMessage()))
@@ -109,7 +111,6 @@ public class UserListVM extends BaseViewModel<UsersListView> {
                 }
             }
         }, () -> usersListPublishSubject.onNext(users), error -> {
-
         });
     }
 

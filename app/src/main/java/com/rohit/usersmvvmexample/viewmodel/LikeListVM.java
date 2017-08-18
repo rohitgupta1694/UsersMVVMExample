@@ -3,14 +3,18 @@ package com.rohit.usersmvvmexample.viewmodel;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.rohit.usersmvvmexample.adapters.UsersListAdapter;
 import com.rohit.usersmvvmexample.baseUiComponents.viewModels.BaseViewModel;
 import com.rohit.usersmvvmexample.interfaces.UsersListView;
 import com.rohit.usersmvvmexample.models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.PublishSubject;
 import io.realm.Realm;
@@ -22,7 +26,7 @@ public class LikeListVM extends BaseViewModel<UsersListView> {
     private Realm realm;
     public UsersListAdapter mAdapter;
     public LinearLayoutManager linearLayoutManager;
-    private static final String TAG = LikeListVM.class.getSimpleName();
+    private List<User> likedUsersList = new ArrayList<>();
     private PublishSubject<List<User>> likesPublishSubject = PublishSubject.create();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -46,16 +50,13 @@ public class LikeListVM extends BaseViewModel<UsersListView> {
         // TODO: 8/8/17 Add Like Change Observable
         /*compositeDisposable.add();*/
 
-/*        compositeDisposable.add(likesPublishSubject.doOnNext(users -> {
+        compositeDisposable.add(likesPublishSubject.doOnNext(users -> {
             List<UserItemVM> userItemVMs = new ArrayList<>();
             for (User user : users) {
                 userItemVMs.add(new UserItemVM(user.getId(), realm));
             }
-            if (mAdapter.getItemCount() > 0)
-                mAdapter.appendData(userItemVMs);
-            else
-                mAdapter.setData(userItemVMs);
-        }).subscribe());*/
+            mAdapter.setData(userItemVMs);
+        }).subscribe());
     }
 
     @Override
@@ -65,5 +66,25 @@ public class LikeListVM extends BaseViewModel<UsersListView> {
     }
 
     //endregion
+
+    //Query Users Table
+
+    public void searchForLikedUsers() {
+        realm.executeTransaction(realm1 -> {
+            likedUsersList.addAll(realm1.where(User.class).equalTo("mLiked", true).findAll());
+            Observable.just(likedUsersList.size())
+                    .filter(integer -> integer > 0)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext(integer -> {
+                        setEmptyScreenVisible(View.GONE);
+                        likesPublishSubject.onNext(likedUsersList);
+                    }).subscribe();
+            Observable.just(likedUsersList.size())
+                    .filter(integer -> integer <= 0)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext(integer -> setEmptyScreenVisible(View.VISIBLE)
+                    ).subscribe();
+        });
+    }
 
 }

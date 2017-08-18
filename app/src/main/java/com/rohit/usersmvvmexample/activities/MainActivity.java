@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jakewharton.rxbinding2.support.design.widget.RxTabLayout;
+import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.rohit.usersmvvmexample.R;
 import com.rohit.usersmvvmexample.adapters.ViewPagerAdapter;
 import com.rohit.usersmvvmexample.fragments.LikedFragment;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         Observable<TabLayout.Tab> tabObservable = RxTabLayout.selections(tabLayout)
                 .observeOn(AndroidSchedulers.mainThread())
                 .share()
-                .doOnNext(tab -> viewPager.setCurrentItem(tab.getPosition(), true));
+                .doOnNext(tab -> RxViewPager.currentItem(viewPager).accept(tab.getPosition()));
 
         compositeDisposables.add(tabObservable.subscribe());
     }

@@ -19,5 +19,25 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true" />
 
+        <LinearLayout
+            android:id="@+id/users_fragment_fetch_liked_users_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/textColorWhite"
+            android:visibility="@{vm.emptyScreenVisible}"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/users_fragment_fetch_liked_users_button"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get Liked Users List"
+                android:textSize="16dp"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>
